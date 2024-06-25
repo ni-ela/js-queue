@@ -1,8 +1,14 @@
 body {
+    font-family: "Montserrat", sans-serif;
+    font-size: 16px;
+}
+
+.title {
+    font-weight: 600;
+    color: #800080
 }
 
 .btn {
-    /* Reset button styles */
     margin: 0;
     padding: 0;
     border: none;
@@ -11,4 +17,68 @@ body {
     font: inherit;
     text-decoration: none;
     cursor: pointer;
+}
+
+#prompt {
+    margin: 0;
+    padding: 8px;
+    background: none;
+    color: inherit;
+    font: inherit;
+    resize: none;
+    outline: none;
+    
+    border: 2px solid #CCCC;
+    border-radius: 5px;
+
+    &:hover {
+        border-color: rgb(131, 100, 192);
+    }
+
+    &:focus {
+        border-color: #800080;
+    }
+}
+
+i {
+    color: #800080;
+    font-size: 25px;
+    margin-right: 8px;
+}
+
+.btn {
+    &:hover i {
+        opacity: 0.8;
+    }
+}
+
+#process_btn {
+    display: flex;
+    margin-top: 8px;
+    align-items: center;
+
+    &:hover {
+        color: #661f66;
+    }
+}
+
+#send_btn::after {
+    content: "Enviar mensagem";
+    position: relative;
+    top: 19px;
+    left: -34px;
+    transform: translateX(-50%);
+    background-color: #000;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+#send_btn:hover::after {
+    opacity: 1;
+    visibility: visible;
 }

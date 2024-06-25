@@ -4,6 +4,9 @@
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.4.2/uicons-solid-straight/css/uicons-solid-straight.css'>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playwrite+NG+Modern:wght@100..400&display=swap" rel="stylesheet">
     <script type="module" src="index.js"></script>
     <script type="module">
         import { createRequest, atende } from './index.js';
@@ -12,10 +15,10 @@
     </script>
 </head>
 <body>
-    <h1>Fila de requisições</h1>
+    <h1 class="title">Fila de requisições</h1>
     <textarea id="prompt" rows="5" cols="50"></textarea>
-    <button class="btn" onclick="createRequest()"><i class="fi fi-ss-paper-plane-top"></i></button>
-    <button class="btn" onclick="atende()"><i class="fi fi-ss-check-circle"></i></button>
+    <button class="btn" id="send_btn" onclick="createRequest()"><i class="fi fi-ss-paper-plane-top"></i></button>
+    <button class="btn" id="process_btn" onclick="atende()"><i class="fi fi-ss-check-circle"></i> Processar todas as chamadas</button>
     <ul id="queue" style="display: none;">
         <p>Respostas</p>
     </ul>
