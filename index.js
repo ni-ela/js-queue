@@ -1,4 +1,4 @@
-import { api } from "./api.js"
+import { api, getAuthHeader } from "./api.js"
 import { RequestsQueue } from "./RequestQueue.js"
 
 // Cria a fila de requisições
@@ -22,7 +22,6 @@ export function atende() {
 	queue.print;
 }
 
-const ORIGIN = 'COGNA_IA_PLUGIN'
 const PLUGIN_TYPE = 'EXCEL'
 const CHAT_ENDPOINT = '/v1/chat'
 
@@ -53,12 +52,3 @@ const formatRequest = (question) => {
 		},
 	};
 };
-
-const getAuthHeader = async () => {
-	const token = "" 
-	return {
-	  Authorization: `Bearer ${token}`,
-	  "X-Request-Origin": ORIGIN,
-	  "accept": "application/json"
-	};
-  };
