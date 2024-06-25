@@ -3,15 +3,21 @@
     <title>Queue</title>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.4.2/uicons-solid-straight/css/uicons-solid-straight.css'>
     <link rel="stylesheet" href="style.css">
-    <script src="index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="module" src="index.js"></script>
+    <script type="module">
+        import { createRequest, atende } from './index.js';
+        window.createRequest = createRequest;
+        window.atende = atende;
+    </script>
 </head>
 <body>
     <h1>Fila de requisições</h1>
     <textarea id="prompt" rows="5" cols="50"></textarea>
-    <ul id="queue" style="display: none;">
-    </ul>
-
     <button class="btn" onclick="createRequest()"><i class="fi fi-ss-paper-plane-top"></i></button>
     <button class="btn" onclick="atende()"><i class="fi fi-ss-check-circle"></i></button>
+    <ul id="queue" style="display: none;">
+        <p>Respostas</p>
+    </ul>
 </body>
 </html>

@@ -1,48 +1,5 @@
-/**
- * Classe que representa uma fila de requisições.
- */
-class RequestsQueue {
-	/**
-	 * Cria uma nova instância da fila de requisições.
-	 */
-	constructor() {
-		this.requests = {}
-		this.nextIndex = 0
-		this.previousIndex = 0
-	}
-
-	/**
-	 * Adiciona um item à fila.
-	 * @param {*} item - O item a ser enfileirado.
-	 */
-	enqueue(item) { // enfileira um item
-		this.requests[this.previousIndex] = item
-		this.previousIndex++
-	}
-
-	/**
-	 * "Atende" o primeiro item da fila
-	 */
-	dequeue() { 
-		delete this.requests[this.nextIndex]
-		this.nextIndex++
-	}
-	
-	/**
-	 * Retorna o próximo item da fila sem removê-lo.
-	 * @returns {*} O próximo item da fila.
-	 */
-	peek() {
-		return this.requests[this.nextIndex]
-	}
-
-	/**
-	 * Imprime a fila de requisições no console.
-	 */
-	get print() {
-		console.log(this.requests);
-	}
-}
+import { api } from "./api.js"
+import { RequestsQueue } from "./RequestQueue.js"
 
 // Cria a fila de requisições
 const queue = new RequestsQueue()
@@ -50,14 +7,58 @@ const queue = new RequestsQueue()
 /**
  * Função que inclui novas requisições na fila
  */
-function createRequest() {
+export function createRequest() {
 	let prompt = document.getElementById('prompt').value
-	queue.enqueue(prompt)
+	queue.enqueue(() => sendQuestion(prompt));
+
+	
 	document.getElementById('prompt').value = ''
 	queue.print;
 }
 
-function atende() {
-	queue.dequeue()
+export function atende() {
+	document.getElementById('queue').style.display = 'block'
+	queue.processQueue();
 	queue.print;
 }
+
+const ORIGIN = 'COGNA_IA_PLUGIN'
+const PLUGIN_TYPE = 'EXCEL'
+const CHAT_ENDPOINT = '/v1/chat'
+
+const sendQuestion = async (question) => {
+	let data
+	const body = formatRequest(question);
+	const headers = await getAuthHeader()
+	const response = await api.post(CHAT_ENDPOINT, body, {
+		headers: headers,
+		requestType: "stream",
+		responseEncoding: "utf8",
+		timeout: 150000
+	});
+	data = response?.data[0].message.content
+	document.getElementById('queue').innerHTML += `<li>${data}</li>`;
+}
+
+
+const formatRequest = (question) => {
+	return {
+		message: question,
+		properties: {
+			temperature: 0,
+			stream: false,
+			formatStreamResponse: false,
+			pluginContent: null,
+			pluginType: PLUGIN_TYPE,
+		},
+	};
+};
+
+const getAuthHeader = async () => {
+	const token = "" 
+	return {
+	  Authorization: `Bearer ${token}`,
+	  "X-Request-Origin": ORIGIN,
+	  "accept": "application/json"
+	};
+  };
