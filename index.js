@@ -18,7 +18,7 @@ export function createRequest() {
 
 export function atende() {
 	document.getElementById('queue').style.display = 'block'
-	queue.processQueue();
+	queue.startProcessing();
 	queue.print;
 }
 

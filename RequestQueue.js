@@ -61,4 +61,33 @@ export class RequestsQueue {
 
 		this.isProcessing = false;
 	}
+
+	async sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	async processQueue() {
+		if (this.isProcessing) return;
+
+		this.isProcessing = true;
+
+		while (this.nextIndex < this.previousIndex) {
+			const request = this.peek();
+			try {
+				await request();
+			} catch (error) {
+				console.error('Erro na requisição:', error);
+			}
+			this.dequeue();
+			await this.sleep(500); // Aguarda 500ms antes de processar a próxima requisição
+		}
+
+		this.isProcessing = false;
+	}
+
+	startProcessing() {
+		if (!this.isProcessing) {
+			this.processQueue();
+		}
+	}
 }
