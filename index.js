@@ -53,6 +53,7 @@ const queue = new RequestsQueue()
 function createRequest() {
 	let prompt = document.getElementById('prompt').value
 	queue.enqueue(prompt)
+	document.getElementById('prompt').value = ''
 	queue.print;
 }
 
