@@ -4,3 +4,6 @@
 # Diretórios
 node_modules/
 dist/
+
+# Arquivos
+api.js
