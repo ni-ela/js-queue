@@ -43,25 +43,7 @@ export class RequestsQueue {
 	get print() {
 		console.log(this.requests);
 	}
-
-	async processQueue() {
-		if (this.isProcessing) return;
-
-		this.isProcessing = true;
-
-		while (this.nextIndex < this.previousIndex) {
-			const request = this.peek();
-			try {
-				await request();
-			} catch (error) {
-				console.error('Erro na requisição:', error);
-			}
-			this.dequeue();
-		}
-
-		this.isProcessing = false;
-	}
-
+	
 	async sleep(ms) {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	}
